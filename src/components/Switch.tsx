@@ -6,6 +6,7 @@ import {
 } from "../util";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTheme } from "../hooks/useTheme";
 
 interface SwitchProps {
   themeType?: ThemeType;
@@ -18,7 +19,7 @@ interface SwitchProps {
 }
 
 function Switch({
-  themeType = "primary",
+  themeType,
   iconTrue,
   iconFalse,
   label,
@@ -26,6 +27,7 @@ function Switch({
   value,
   onChange,
 }: SwitchProps) {
+  const theme = useTheme();
   const [onTrue, setOnTrue] = useState(!!value);
 
   useEffect(() => {
@@ -49,14 +51,17 @@ function Switch({
       <div>
         <div
           className={generateContainerSwitchStyle(
-            themeType,
+            themeType || theme?.themeType || "primary",
             !!onTrue,
             disabled
           )}
           onClick={toggle}
         >
           <div
-            className={generateSwitchStyle(themeType, !!onTrue)}
+            className={generateSwitchStyle(
+              themeType || theme?.themeType || "primary",
+              !!onTrue
+            )}
             style={{
               transform: onTrue ? "translateX(20px)" : "translateX(0)",
             }}

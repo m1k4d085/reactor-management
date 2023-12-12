@@ -15,9 +15,11 @@ export const themeBrowser = {
     localStorage.setItem("mode-type", mode);
   },
   getTheme() {
-    return "primary" as ThemeType;
+    const storedTheme = localStorage.getItem("theme-type") as ThemeType | null;
+    if (storedTheme) return storedTheme;
+    return "primary";
   },
   setTheme(theme: ThemeType) {
-    console.log(theme);
+    localStorage.setItem("theme-type", theme);
   },
 };
