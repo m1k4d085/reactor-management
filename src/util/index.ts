@@ -377,7 +377,8 @@ export function generateDrawerStyle(
     "lg:w-1/3",
     "xl:w-1/4",
     opened ? "shadow-xl" : "shadow",
-    "border-e-2"
+    "border-e-2",
+    "p-2",
   ].join(" ");
   let styledClass = "";
   switch (themeType) {
@@ -400,4 +401,91 @@ export function generateDrawerStyle(
   }
 
   return `${sharedClass} ${styledClass}`;
+}
+
+export function getBgColor(themeType: ThemeType) {
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = [
+        "text-light",
+        "bg-primary-700",
+        "dark:bg-primary-300",
+        "dark:text-dark",
+      ].join(" ");
+      break;
+    case "secondary":
+      styledClass = [
+        "text-light",
+        "bg-secondary-700",
+        "dark:bg-secondary-300",
+        "dark:text-dark",
+      ].join(" ");
+      break;
+  }
+  return styledClass;
+}
+
+export function getTextColor(themeType: ThemeType) {
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = ["text-primary-700", "dark:text-primary-300"].join(" ");
+      break;
+    case "secondary":
+      styledClass = ["text-secondary-700", "dark:text-secondary-300"].join(" ");
+      break;
+  }
+  return styledClass;
+}
+
+export function generateNavLinkStyle(
+  themeType: ThemeType = "primary",
+  active: boolean,
+  pending: boolean
+) {
+  const sharedClass = [
+    "flex",
+    "gap-4",
+    "px-4",
+    "py-3",
+    "no-underline",
+    "rounded-lg",
+    "whitespace-pre",
+    getBgColor(themeType),
+  ].join(" ");
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = [
+        "hover:bg-primary-900",
+        "dark:hover:bg-primary-400",
+        pending ? "bg-primary-500" : active ? "bg-primary-900" : "",
+        pending ? "dark:bg-primary-50" : active ? "dark:bg-primary-400" : "",
+      ].join(" ");
+      break;
+    case "secondary":
+      styledClass = [
+        "hover:bg-secondary-900",
+        "dark:hover:bg-secondary-400",
+        pending ? "bg-secondary-500" : active ? "bg-secondary-900" : "",
+        pending
+          ? "dark:bg-secondary-50"
+          : active
+          ? "dark:bg-secondary-400"
+          : "",
+      ].join(" ");
+      break;
+  }
+
+  return `${sharedClass} ${styledClass}`;
+}
+
+export function sleep(ms: number = 2000) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function fakeLoader() {
+  await sleep(1000);
+  return null;
 }
