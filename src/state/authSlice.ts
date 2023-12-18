@@ -16,19 +16,26 @@ export interface AuthPayload {
   session: Session | null;
 }
 
+export interface AuthPayloadRecover {
+  user: User;
+  session: Session;
+}
+
 // "auth/<function name>"
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    recover() {},
+    recover(state: AuthState, action: PayloadAction<AuthPayloadRecover>) {
+      state.user = action.payload.user;
+      state.session = action.payload.session;
+      state.loggedIn = true;
+    },
     signIn(state: AuthState, action: PayloadAction<AuthPayload>) {
       state.user = action.payload.user;
       state.session = action.payload.session;
-      console.log(state.user, state.session);
       if (state.user === null || state.session === null) state.loggedIn = false;
       else state.loggedIn = true;
-      console.log(state.loggedIn);
     },
     signOut(state: AuthState) {
       state.user = null;

@@ -8,14 +8,18 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import SupabaseProvider from "./providers/SupabaseProvider.tsx";
 import { supabase } from "./supabase";
+import { QueryClientProvider } from "react-query";
+import { queryClient } from "./query/index.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
       <SupabaseProvider supabase={supabase}>
-        <ReduxProvider store={store}>
-          <RouterProvider router={router} />
-        </ReduxProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReduxProvider store={store}>
+            <RouterProvider router={router} />
+          </ReduxProvider>
+        </QueryClientProvider>
       </SupabaseProvider>
     </ThemeProvider>
   </React.StrictMode>

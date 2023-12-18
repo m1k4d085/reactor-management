@@ -11,7 +11,7 @@ export function generateButtonStyle(
   const sharedClass = [
     "px-4",
     "py-3",
-    "m-2",
+    // "m-2",
     open === "top" ? "" : "rounded-t-md",
     open === "bottom" ? "" : "rounded-b-md",
     "disabled:opacity-50",
