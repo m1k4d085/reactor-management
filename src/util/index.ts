@@ -426,6 +426,88 @@ export function getBgColor(themeType: ThemeType) {
   return styledClass;
 }
 
+export function getTableStyle(themeType: ThemeType) {
+  const sharedClass = [
+    "w-full",
+    "rounded-md",
+    "overflow-hidden",
+    "dark:text-light",
+  ].join(" ");
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = [].join(" ");
+      break;
+    case "secondary":
+      styledClass = [].join(" ");
+      break;
+  }
+  return `${sharedClass} ${styledClass}`;
+}
+
+export function getTableRowBgColor(
+  themeType: ThemeType,
+  clickable: boolean = false
+) {
+  const sharedClass = [clickable ? "cursor-pointer" : ""].join(" ");
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = [
+        "odd:bg-primary-300",
+        clickable ? "hover:bg-primary-500" : "",
+        "dark:odd:bg-primary-500",
+        clickable ? "dark:hover:bg-primary-700" : "",
+      ].join(" ");
+      break;
+    case "secondary":
+      styledClass = [
+        "odd:bg-secondary-300",
+        clickable ? "hover:bg-secondary-500" : "",
+        "dark:odd:bg-secondary-500",
+        clickable ? "dark:hover:bg-secondary-700" : "",
+      ].join(" ");
+      break;
+  }
+  return `${sharedClass} ${styledClass}`;
+}
+
+export function getDivideXColor(themeType: ThemeType) {
+  const sharedClass = ["divide-x-2"].join(" ");
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = [
+        "even:divide-primary-300",
+        "dark:even:divide-primary-100",
+      ].join(" ");
+      break;
+    case "secondary":
+      styledClass = [
+        "even:divide-secondary-300",
+        "dark:even:divide-secondary-100",
+      ].join(" ");
+      break;
+  }
+  return `${sharedClass} ${styledClass}`;
+}
+
+export function getDivideYColor(themeType: ThemeType) {
+  const sharedClass = ["divide-y-2"].join(" ");
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = ["divide-primary-300", "dark:divide-primary-100"].join(" ");
+      break;
+    case "secondary":
+      styledClass = ["divide-secondary-300", "dark:divide-secondary-100"].join(
+        " "
+      );
+      break;
+  }
+  return `${sharedClass} ${styledClass}`;
+}
+
 export function getTextColor(themeType: ThemeType) {
   let styledClass = "";
   switch (themeType) {
@@ -488,4 +570,13 @@ export function sleep(ms: number = 2000) {
 export async function fakeLoader() {
   await sleep(1000);
   return null;
+}
+
+export function uuidv4() {
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+    (
+      Number(c) ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (Number(c) / 4)))
+    ).toString(16)
+  );
 }

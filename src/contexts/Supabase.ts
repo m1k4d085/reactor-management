@@ -34,10 +34,18 @@ export type CRUD<Entity extends keyof Database["public"]["Tables"]> = {
   remove(params: { id: string }): Promise<void>;
 };
 
+export type SupabaseFile = {
+  name: string;
+  url: string;
+};
+
 export type SupabaseFunctions = {
   signIn(credentials: SignInWithPasswordCredentials): Promise<SignIn>;
   signOut(): Promise<void>;
   recoverSession(): Promise<Recover>;
+  uploadFile(file: File): Promise<string>;
+  listFiles(): Promise<SupabaseFile[]>;
+  removeFile(filename: string): Promise<void>;
   products: CRUD<"products">;
   media: CRUD<"media">;
   customers: CRUD<"customers">;

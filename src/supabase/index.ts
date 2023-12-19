@@ -2,8 +2,9 @@ import {
   SignInWithPasswordCredentials,
   createClient,
 } from "@supabase/supabase-js";
-import { SupabaseFunctions } from "../contexts/Supabase";
+import { SupabaseFile, SupabaseFunctions } from "../contexts/Supabase";
 import { Tables, TablesInsert } from "./database.types";
+import { uuidv4 } from "../util";
 
 const client = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -46,10 +47,41 @@ async function recoverSession() {
   return { user: session.user, session };
 }
 
+async function uploadFile(file: File): Promise<string> {
+  const ext = /(?:\.([^.]+))?$/.exec(file.name)?.[1];
+  const uuid = uuidv4();
+
+  const { data, error } = await client.storage
+    .from("reactor")
+    .upload(`/${uuid}.${ext}`, file);
+  if (error) throw error;
+
+  return data.path;
+}
+async function listFiles(): Promise<SupabaseFile[]> {
+  const filesUrl: SupabaseFile[] = [];
+  const { data: list, error } = await client.storage.from("reactor").list();
+  if (error) throw error;
+
+  for (const file of list) {
+    const { data } = client.storage.from("reactor").getPublicUrl(file.name);
+    filesUrl.push({ name: file.name, url: data.publicUrl });
+  }
+
+  return filesUrl;
+}
+async function removeFile(filename: string): Promise<void> {
+  const { error } = await client.storage.from("reactor").remove([filename]);
+  if (error) throw error;
+}
+
 export const supabase: SupabaseFunctions = {
   signIn,
   signOut,
   recoverSession,
+  uploadFile,
+  listFiles,
+  removeFile,
   products: {
     async get(query?: Partial<Tables<"products">>) {
       let select = client.from("products").select();

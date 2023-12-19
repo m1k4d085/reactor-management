@@ -1,6 +1,8 @@
 import {
   faBook,
+  faCreditCard,
   faCube,
+  faImages,
   faPalette,
   faSignIn,
   faSignOut,
@@ -36,6 +38,22 @@ function Navbar({ large = true }: NavbarProps) {
                 to="test"
                 icon={faCube}
                 label="Test"
+                large={large}
+              />
+            </li>
+            <li>
+              <NavLinkLoading
+                to="media"
+                icon={faImages}
+                label="Media"
+                large={large}
+              />
+            </li>
+            <li>
+              <NavLinkLoading
+                to="customers"
+                icon={faCreditCard}
+                label="Clienti"
                 large={large}
               />
             </li>
