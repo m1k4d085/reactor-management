@@ -1,5 +1,5 @@
 import { render, renderHook, waitFor } from "@testing-library/react";
-import { test, expect } from "vitest";
+import { test, expect, expectTypeOf, describe } from "vitest";
 // import { sleep } from "../util";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider as ReduxProvider } from "react-redux";
@@ -13,35 +13,36 @@ import { supabase } from "../supabase";
 import Button from "../components/Button";
 import useCustomers from "../hooks/Customers/useSelect";
 import { FC, PropsWithChildren } from "react";
+import { sleep } from "../util";
 
 test("add", () => {
-  expect(1 + 1).toBe(2); //jest
+  expect(1 + 1).toBe(2);
+  expect(1 + 1).to.be.eq(2); //chai js
 });
 
 test("add type", () => {
-  // const myNumber = Number(2);
-  // expectTypeOf(myNumber).toBeBoolean;
+  expectTypeOf(1 + 1).not.toBeString();
 });
 
-// describe.concurrent("prova", () => {
-//   test("serial", async () => {
-//     await sleep(2000);
-//   });
+describe.concurrent("prova", () => {
+  test("serial", async () => {
+    await sleep(2000);
+  });
 
-//   test.concurrent("concurrent 1", async () => {
-//     await sleep(2000);
-//   });
-//   test.concurrent("concurrent 2", async () => {
-//     await sleep(2000);
-//   });
-// });
+  test.concurrent("concurrent 1", async () => {
+    await sleep(2000);
+  });
+  test.concurrent("concurrent 2", async () => {
+    await sleep(2000);
+  });
+});
 
-// test.concurrent("single concurrent 1", async () => {
-//   await sleep(2000);
-// });
-// test.concurrent("single concurrent 2", async () => {
-//   await sleep(2000);
-// });
+test.concurrent("single concurrent 1", async () => {
+  await sleep(2000);
+});
+test.concurrent("single concurrent 2", async () => {
+  await sleep(2000);
+});
 
 test("render app", async () => {
   render(
@@ -82,4 +83,5 @@ test("useCustomer", async () => {
   await waitFor(() => expect(customers.current[1].status).toBe("success"));
 
   expect(customers.current[1].data).toHaveLength(2);
+  expect(customers.current[1].data?.map((customer) => customer.email)).contains("mirko.abbrescia@aulab.it");
 });
