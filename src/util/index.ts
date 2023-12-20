@@ -521,6 +521,20 @@ export function getTextColor(themeType: ThemeType) {
   return styledClass;
 }
 
+export function getRingColor(themeType: ThemeType) {
+  const sharedClass = ["ring"].join(" ");
+  let styledClass = "";
+  switch (themeType) {
+    case "primary":
+      styledClass = ["ring-primary-600", "dark:ring-primary-400"].join(" ");
+      break;
+    case "secondary":
+      styledClass = ["ring-secondary-600", "dark:ring-secondary-400"].join(" ");
+      break;
+  }
+  return `${sharedClass} ${styledClass}`;
+}
+
 export function generateNavLinkStyle(
   themeType: ThemeType = "primary",
   active: boolean,

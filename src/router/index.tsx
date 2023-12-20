@@ -10,6 +10,7 @@ import Test from "../pages/Test";
 import Customers from "../pages/customers/Customers";
 import FormCustomer from "../pages/customers/FormCustomer";
 import Media from "../pages/products/Media";
+import Customer from "../pages/customers/Customer";
 
 export interface CustomerParams extends Record<string, string | undefined> {
   customerId: string | undefined;
@@ -48,6 +49,15 @@ export const router = createBrowserRouter([
         element: (
           <Protected redirectTo="/login">
             <FormCustomer />
+          </Protected>
+        ),
+        loader: fakeLoader,
+      },
+      {
+        path: "/customers/:customerId",
+        element: (
+          <Protected redirectTo="/login">
+            <Customer />
           </Protected>
         ),
         loader: fakeLoader,

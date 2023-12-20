@@ -43,7 +43,7 @@ function Customers() {
       <ErrorBaloon reset={() => setError(null)}>{error?.message}</ErrorBaloon>
       <Table<Tables<"customers">>
         data={customers}
-        // onRowClick={() => navigate("add")}
+        onRowClick={(item) => navigate(item.id)}
         columns={[
           {
             key: "id",

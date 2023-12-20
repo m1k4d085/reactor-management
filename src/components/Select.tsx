@@ -28,7 +28,7 @@ function Select({
   onChange,
 }: SelectProps) {
   const theme = useTheme();
-  const timeout = useRef<number | null>(null);
+  const timeout = useRef<NodeJS.Timeout | null>(null);
   const [state, setState] = useState<{
     selectedIndex: number | undefined;
     opened: boolean;
